@@ -16,8 +16,8 @@ public class Robot extends TimedRobot {
     //final variables [correct]
     DifferentialDrivetrainSim sim = new DifferentialDrivetrainSim(
             DCMotor.getNeo550(1),
-            5,
-            15,
+            150,
+            30,
             5,
             1,
             0.5,
