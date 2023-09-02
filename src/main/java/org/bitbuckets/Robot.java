@@ -39,8 +39,6 @@ public class Robot extends TimedRobot {
         sim.setInputs(lastLeftVoltageCommand_volts, lastRightVoltageCommand_volts);
         sim.update(TICK_LENGTH_SECONDS);
 
-
-
         Pose2d estimatedPose = sim.getPose();
         double[] poseArray = new double[] {estimatedPose.getX(), estimatedPose.getY(), estimatedPose.getRotation().getRadians()};
 
