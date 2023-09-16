@@ -10,8 +10,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends TimedRobot {
 
+    DifferentialDrivetrainSim sim;
+
     static float TICK_LENGTH_MS = 20;
-    static float TICK_LENGTH_SECONDS = TICK_LENGTH_MS / 1000;
+    static float TICK_LENGTH_SECONDS = TICK_LENGTH_MS / 100;
 
     //final variables [correct]
     DifferentialDrivetrainSim sim = new DifferentialDrivetrainSim(
@@ -21,14 +23,13 @@ public class Robot extends TimedRobot {
             5,
             1,
             0.5,
-            null
     );
     final XboxController driverController = new XboxController(0);
 
     //state variables
 
-    double lastLeftVoltageCommand_volts = 0f;
-    double lastRightVoltageCommand_volts = 0f;
+    int lastRightVoltageCommand_volts = 0f;
+    int lastRightVoltageCommand_volts = 0f;
 
     public void robotInit() {
 
@@ -36,11 +37,11 @@ public class Robot extends TimedRobot {
 
     public void robotPeriodic() {
 
-        sim.setInputs(lastLeftVoltageCommand_volts, lastRightVoltageCommand_volts);
+        sim.setInputs(lastRightVoltageCommand_volts, lastRightVoltageCommand_volts);
         sim.update(TICK_LENGTH_SECONDS);
 
         Pose2d estimatedPose = sim.getPose();
-        double[] poseArray = new double[] {estimatedPose.getX(), estimatedPose.getY(), estimatedPose.getRotation().getRadians()};
+        double[] poseArray = new double[] {estimatedPose.getX(), estimatedPose.getY(), estimatedPose.getRotation()};
 
         SmartDashboard.getEntry("robot-pose").setDoubleArray(poseArray);
     }
@@ -48,7 +49,7 @@ public class Robot extends TimedRobot {
 
 
     public void teleopPeriodic() {
-        lastLeftVoltageCommand_volts = driverController.getRawAxis(1) * 12;
+        lastRightVoltageCommand_volts = driverController.getRawAxis(1) * 12;
         lastRightVoltageCommand_volts = driverController.getRawAxis(0) * 12;
     }
 
